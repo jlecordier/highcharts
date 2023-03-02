@@ -10,8 +10,20 @@
 
 'use strict';
 
+/* *
+ *
+ *  Imports
+ *
+ * */
+
 import type { LonLatArray, ProjectedXYArray } from '../MapViewOptions';
 import type ProjectionDefinition from '../ProjectionDefinition';
+
+/* *
+ *
+ *  Constants
+ *
+ * */
 
 const A1 = 1.340264,
     A2 = -0.081106,
@@ -20,7 +32,13 @@ const A1 = 1.340264,
     M = Math.sqrt(3) / 2.0,
     scale = 74.03120656864502;
 
-export default class EqualEarth implements ProjectionDefinition {
+/* *
+ *
+ *  Class
+ *
+ * */
+
+class EqualEarth implements ProjectionDefinition {
 
     bounds = {
         x1: -200.37508342789243,
@@ -88,3 +106,11 @@ export default class EqualEarth implements ProjectionDefinition {
     }
 
 }
+
+/* *
+ *
+ *  Default Export
+ *
+ * */
+
+export default EqualEarth;

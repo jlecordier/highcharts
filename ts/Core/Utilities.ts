@@ -876,11 +876,13 @@ function wrap<T, K extends FunctionNamesOf<T>>(
             scope = this;
 
         return func.apply(this, [
-            function (): ReturnType<typeof proceed> {
-                return proceed.apply(
-                    scope,
-                    arguments.length ? arguments : outerArgs
-                );
+            function (): (ReturnType<typeof proceed>|undefined) {
+                if (proceed) {
+                    return proceed.apply(
+                        scope,
+                        arguments.length ? arguments : outerArgs
+                    );
+                }
             }
         ].concat(
             [].slice.call(arguments)

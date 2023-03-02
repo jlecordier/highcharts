@@ -3,6 +3,13 @@
  * */
 
 'use strict';
+
+/* *
+ *
+ *  Imports
+ *
+ * */
+
 import type {
     LonLatArray,
     MapBounds,
@@ -10,6 +17,12 @@ import type {
 } from '../MapViewOptions';
 import type ProjectionDefinition from '../ProjectionDefinition';
 import type ProjectionOptions from '../ProjectionOptions';
+
+/* *
+ *
+ *  Constants
+ *
+ * */
 
 const sign = (Math as any).sign ||
     ((n: number): number => (n === 0 ? 0 : n > 0 ? 1 : -1)),
@@ -19,7 +32,13 @@ const sign = (Math as any).sign ||
     eps10 = 1e-6,
     tany = (y: number): number => Math.tan((halfPI + y) / 2);
 
-export default class LambertConformalConic implements ProjectionDefinition {
+/* *
+ *
+ *  Class
+ *
+ * */
+
+class LambertConformalConic implements ProjectionDefinition {
 
     private c: number;
     private n: number;
@@ -99,3 +118,11 @@ export default class LambertConformalConic implements ProjectionDefinition {
         ];
     }
 }
+
+/* *
+ *
+ *  Default Export
+ *
+ * */
+
+export default LambertConformalConic;

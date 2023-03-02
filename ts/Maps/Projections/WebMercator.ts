@@ -4,14 +4,32 @@
 
 'use strict';
 
+/* *
+ *
+ *  Imports
+ *
+ * */
+
 import type { LonLatArray, ProjectedXYArray } from '../MapViewOptions';
 import type ProjectionDefinition from '../ProjectionDefinition';
+
+/* *
+ *
+ *  Constants
+ *
+ * */
 
 const maxLatitude = 85.0511287798, // The latitude that defines a square
     r = 63.78137,
     deg2rad = Math.PI / 180;
 
-export default class WebMercator implements ProjectionDefinition {
+/* *
+ *
+ *  Class
+ *
+ * */
+
+class WebMercator implements ProjectionDefinition {
 
     bounds = {
         x1: -200.37508342789243,
@@ -45,3 +63,11 @@ export default class WebMercator implements ProjectionDefinition {
 
     maxLatitude = maxLatitude;
 }
+
+/* *
+ *
+ *  Default Export
+ *
+ * */
+
+export default WebMercator;

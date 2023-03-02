@@ -116,7 +116,7 @@ class TreegraphLayout {
      * @param {Array<TreegraphNode>} nodes
      *        All of the nodes.
      */
-    public beforeLayout(nodes: TreegraphNode[]): void {
+    public beforeLayout(nodes: Array<TreegraphNode>): void {
         for (const node of nodes) {
             let index = 0;
 

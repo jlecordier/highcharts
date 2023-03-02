@@ -10,6 +10,12 @@
 
 'use strict';
 
+/* *
+ *
+ *  Imports
+ *
+ * */
+
 import type {
     GeoJSONGeometryMultiPoint
 } from './GeoJSON';
@@ -31,6 +37,11 @@ import registry from './Projections/ProjectionRegistry.js';
 import U from '../Core/Utilities.js';
 const { clamp, erase } = U;
 
+/* *
+ *
+ *  Constants
+ *
+ * */
 
 const deg2rad = Math.PI * 2 / 360;
 // Safe padding on either side of the antimeridian to avoid points being
@@ -51,7 +62,13 @@ const wrapLon = (lon: number): number => {
     return lon;
 };
 
-export default class Projection {
+/* *
+ *
+ *  Class
+ *
+ * */
+
+class Projection {
 
     public bounds: MapBounds|undefined;
     public options: ProjectionOptions;
@@ -754,3 +771,11 @@ export default class Projection {
         return path;
     }
 }
+
+/* *
+ *
+ *  Default Export
+ *
+ * */
+
+export default Projection;

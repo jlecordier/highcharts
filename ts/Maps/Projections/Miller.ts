@@ -3,14 +3,33 @@
  * */
 
 'use strict';
+
+/* *
+ *
+ *  Imports
+ *
+ * */
+
 import type { LonLatArray, ProjectedXYArray } from '../MapViewOptions';
 import type ProjectionDefinition from '../ProjectionDefinition';
+
+/* *
+ *
+ *  Constants
+ *
+ * */
 
 const quarterPI = Math.PI / 4,
     deg2rad = Math.PI / 180,
     scale = 63.78137;
 
-export default class Miller implements ProjectionDefinition {
+/* *
+ *
+ *  Class
+ *
+ * */
+
+class Miller implements ProjectionDefinition {
 
     bounds = {
         x1: -200.37508342789243,
@@ -37,3 +56,11 @@ export default class Miller implements ProjectionDefinition {
         ];
     }
 }
+
+/* *
+ *
+ *  Default Export
+ *
+ * */
+
+export default Miller;

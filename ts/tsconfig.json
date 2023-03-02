@@ -17,12 +17,7 @@
         "moduleResolution": "node",
         "outDir": "../js",
         "rootDir": ".",
-        "target": "es5",
-        "lib": [
-            "DOM",
-            "ES5",
-            "ES2015.Promise"
-        ],
+        "target": "es6",
         "types": [
             "jquery",
             "trusted-types"
