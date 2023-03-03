@@ -23,6 +23,8 @@ const compileSingleFile = (path, sourceFolder, createSourceMap) => {
         const closureCompiler = new ClosureCompiler({
             compilationLevel: 'SIMPLE_OPTIMIZATIONS',
             languageIn: 'ECMASCRIPT6_STRICT',
+            languageOut: 'ECMASCRIPT_2015',
+            rewritePolyfills: false,
             createSourceMap
         });
         closureCompiler.run([{
