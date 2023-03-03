@@ -22,7 +22,7 @@ const compileSingleFile = (path, sourceFolder, createSourceMap) => {
     return new Promise((resolve, reject) => {
         const closureCompiler = new ClosureCompiler({
             compilationLevel: 'SIMPLE_OPTIMIZATIONS',
-            languageIn: 'ECMASCRIPT6',
+            languageIn: 'ECMASCRIPT6_STRICT',
             createSourceMap
         });
         closureCompiler.run([{
