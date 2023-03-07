@@ -31,7 +31,6 @@ import ComponentTypes from '../../Dashboards/Components/ComponentType';
 import ComponentGroup from '../../Dashboards/Components/ComponentGroup.js';
 import HighchartsComponent from './HighchartsComponent.js';
 import U from '../../Core/Utilities.js';
-import { type } from 'jquery';
 const { addEvent } = U;
 
 
