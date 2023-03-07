@@ -31,6 +31,7 @@ import ComponentTypes from '../../Dashboards/Components/ComponentType';
 import ComponentGroup from '../../Dashboards/Components/ComponentGroup.js';
 import HighchartsComponent from './HighchartsComponent.js';
 import U from '../../Core/Utilities.js';
+import { type } from 'jquery';
 const { addEvent } = U;
 
 
@@ -47,6 +48,9 @@ declare global {
 }
 
 
+/**
+ *
+ */
 function getAxisMinMaxMap(chart: Chart): Array<{
     coll: string;
     extremes: { min: number | undefined; max: number | undefined };
@@ -109,48 +113,61 @@ const configs: {
                 if (this instanceof (HighchartsComponent || window.HighchartsComponent)) {
                     const { chart, board } = this;
 
-                    const table = this.store?.table;
+                    const table = this.store && this.store.table;
 
-                    if(board && table){
-                        const {states} = board;
+                    if (board && table) {
+                        const { cursor } = board;
 
-                        this.options.chartOptions = {
-                            ...this.options.chartOptions,
-                            plotOptions:  {
-                                series: {
-                                    point: {
-                                        events: {
-                                            // emit table states
-                                            mouseOver: function () {
-                                                console.log('mousing')
-                                                states.emitCursor(table, {
-                                                    type: 'position',
-                                                    row: (this as any).x,
-                                                    state: 'point.mouseOver'
-                                                });
-                                            },
-                                            mouseOut: function () {
-                                                states.emitCursor(table, {
-                                                    type: 'position',
-                                                    row: (this as any).x,
-                                                    state: 'point.mouseOut'
-                                                });
+                        this.on('afterRender', (e): void => {
+                            const component = e.target;
+
+                            if (component && 'chart' in component) {
+                                if (chart && chart.series) {
+                                    chart.series.forEach((series): void => {
+                                        series.update({
+                                            point: {
+                                                events: {
+                                                    // emit table cursor
+                                                    mouseOver: function (): void {
+                                                        cursor.emitCursor(table, {
+                                                            type: 'position',
+                                                            row: this.x,
+                                                            state: 'point.mouseOver'
+                                                        });
+                                                    },
+                                                    mouseOut: function (): void {
+                                                        cursor.emitCursor(table, {
+                                                            type: 'position',
+                                                            row: this.x,
+                                                            state: 'point.mouseOut'
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+
+                                }
+                            }
+
+                        });
+
+
+                        // Return function that handles cleanup
+                        return function (): void {
+                            if (chart && chart.series) {
+                                chart.series.forEach((series): void => {
+                                    series.update({
+                                        point: {
+                                            events: {
+                                                mouseOver: void 0,
+                                                mouseOut: void 0
                                             }
                                         }
-                                    }
-                                }
+                                    });
+                                });
 
-                            } 
-                        } as any;
-
-
-
-
-                        const callbacks = [ ()=>{}];
-
-                        // Return a function that calls the callbacks
-                        return function (): void {
-                            callbacks.forEach((callback): void => callback());
+                            }
                         };
                     }
                 }
@@ -316,31 +333,26 @@ const configs: {
         ],
         tooltipHandler: [
             'tooltipHandler',
-            undefined,//'afterHoverPointChange',
+            void 0, // 'afterHoverPointChange',
             function (this: HighchartsComponent): void {
                 const { chart, board } = this;
-                const table = this.store?.table;
-                if(board && table){
-                    const {states}  =board;
-                    states.addListener(table.id, 'point.mouseOver',  (e) => {
-                        const { chart } = this;
-                        if(chart && chart.series.length){
-                            const [series] = chart.series;
-                            console.log({series})
-                            if(e.cursor.type === 'position' && 'row' in e.cursor){
-                                const [point] = series.data.filter(point => point.x === (e.cursor as any).row);
-                                console.log({point})
-                        
-                                if (point) {
-                                    chart.tooltip?.refresh(point);
+                const table = this.store && this.store.table;
+                if (board && table) {
+                    const { cursor } = board;
+                    if (cursor) {
+                        cursor.addListener(table.id, 'point.mouseOver', (e): void => {
+                            if (chart && chart.series.length) {
+                                const [series] = chart.series;
+                                if (e.cursor.type === 'position' && 'row' in e.cursor) {
+                                    const [point] = series.data.filter((point): boolean => point.x === (e.cursor as any).row);
+
+                                    if (point) {
+                                        chart.tooltip && chart.tooltip.refresh(point);
+                                    }
                                 }
                             }
-                        }
-                    });
-
-                    // states.addListener(table.id, 'point.mouseOut', function () {
-                    //     chart.tooltip?.hide();
-                    // });
+                        });
+                    }
                 }
             }
         ],
