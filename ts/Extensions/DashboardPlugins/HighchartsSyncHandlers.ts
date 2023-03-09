@@ -326,9 +326,7 @@ const configs: {
                 }
             }
         ],
-        tooltipHandler: [
-            'tooltipHandler',
-            void 0, // 'afterHoverPointChange',
+        tooltipHandler:
             function (this: HighchartsComponent): void {
                 const { chart, board } = this;
                 const table = this.store && this.store.table;
@@ -361,8 +359,7 @@ const configs: {
                         });
                     }
                 }
-            }
-        ],
+            },
         selectionHandler: [
             'selectionHandler',
             'afterSelectionChange',
